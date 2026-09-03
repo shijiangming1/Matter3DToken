@@ -1,0 +1,41 @@
+.ruff_cache
+.sii/
+
+# Compiled python modules.
+__pycache__/
+*.pyc
+
+# Python package
+*.egg-info/
+*.egg
+
+# Log folders
+logs/
+scripts/
+checkpoints/
+predictions/
+nuscenes-devkit/
+semantic-kitti-api/
+
+# Runtime crashes and experiment artifacts
+core
+core.*
+*.log
+*.pth
+*.pt
+*.ckpt
+*.onnx
+*.engine
+wandb/
+runs/
+lightning_logs/
+
+# Files
+*.npy
+*.npz
+*.tgz
+*.zip
+*.tar.gz
+*.out
+*.txt
+!requirements.txt

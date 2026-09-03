@@ -1,0 +1,3 @@
+b706a4b43d2d67f7544a0cf8bc61d81f76e8fdb32915d978090da00228feffb7  logs/research/semantic_kitti/VaViT_B-adaptive-v3-sparse-finetune3/run_20260828_014941_finetune3/ckpt_best.pth
+cd9bd2243decc148ff0f3563c26ad6ca59b01d2e147ff961e0dc29129eabec81  logs/research/semantic_kitti/VaViT_B-sparse-batch-20/run_20260826_192620_812229/ckpt_best.pth
+a564064cffba1a0b5de029bd90a3b83cff2b3e2db9e3c0d9553d360c9e902720  logs/research/semantic_kitti/VaViT_B-adaptive-v3-sparse-20-correct/run_20260828_030428_2126796/ckpt_best.pth

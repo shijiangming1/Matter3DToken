@@ -1,0 +1,72 @@
+embedding:
+  input_feat:
+    - "intensity"
+    - "xyz"
+    - "radius"
+  voxel_size: 0.1
+  neighbors: 16
+  cin: 5
+  chidden: 128
+  num_layers: 4
+
+vit:
+  dim: 768
+  depth: 12
+  num_heads: 12
+  expansion: 4.0
+  drop_prob: 0.5
+  bev_size: 0.5
+  density_encoding: false
+  z_aware_prototypes:
+    enabled: true
+    extra_ratio: 0.02
+    entropy_bins: 8
+    min_entropy: 0.15
+    gumbel_tau: 1.0
+    preserve_anchor: true
+    deterministic_assignment: true
+    extra_gate_init: 0.1
+  sparse_batch_reindex: true
+
+merge_head:
+  chidden: 128
+  cout: 128
+
+classif:
+  nb_class: 19
+
+dataloader:
+  batch_size: 8
+  num_workers: 0
+
+augmentations:
+  rotation:
+    - [2, 6]
+  flip:
+    - [0, 1]
+    - [4, 5]
+  scale:
+    - [0, 1, 2]
+    - [4, 5, 6, 7]
+    - 0.1
+  pillarmix:
+    - 7.5
+    - 3
+    - 8
+  instance_cutmix: true
+
+loss:
+  lovasz: 1.0
+
+optim:
+  lr: 0.00005
+  weight_decay: 0.003
+
+scheduler:
+  min_lr: 0.000001
+  max_epoch: 3
+  epoch_warmup: 0
+
+debug:
+  max_train_batches: 30
+  max_val_batches: 100

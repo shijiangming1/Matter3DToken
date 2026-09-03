@@ -1,0 +1,6 @@
+numpy
+PyYAML
+scipy
+tensorboard
+torch>=2.5
+tqdm
