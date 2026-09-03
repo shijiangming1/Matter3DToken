@@ -26,6 +26,10 @@ The Z-aware and budgeted-routing token sets are concatenated within each scene, 
 | Sparse-Batch Re-index | `sparse_batch_reindex` | `matter3dtoken/model.py`, `matter3dtoken/transformer.py`, `datasets/pc_dataset.py` |
 | Shared standard Transformer | `Transformer` | `matter3dtoken/transformer.py` |
 
+Evaluation and calibration utilities are collected under `tools/`; executable
+checks are under `tests/`. Historical controller logs and internal research
+records are intentionally excluded from the release.
+
 The public configuration keys use the same terminology:
 
 ```yaml
@@ -138,4 +142,3 @@ The 69.759820% number is a calibrated fusion of three saved outputs, not the sco
 This directory is a paper-facing refactor of the working research repository. Model, module, package, configuration, and launcher names have been aligned with the Matter3DToken paper. The tensor operations, token construction, routing equations, attention implementation, losses, and optimization flow are unchanged by this refactor.
 
 The code retains the upstream license and notices in `LICENSE` and `NOTICE`.
-

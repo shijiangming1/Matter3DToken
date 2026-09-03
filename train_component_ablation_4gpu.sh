@@ -12,7 +12,7 @@ SEED="${SEED:-31}"
 RUN_ID="$(date -u +%Y%m%d_%H%M%S)_$$"
 
 B_RUN="${ROOT}/logs/retrain/semantic_kitti/B-sparse-4gpu/run_${RUN_ID}"
-ABC_ROOT="${ROOT}/logs/research/semantic_kitti/ABC_full_4gpu_${RUN_ID}"
+ABC_ROOT="${ROOT}/logs/ablation/semantic_kitti/components_full_4gpu_${RUN_ID}"
 
 if [[ ! -d "${DATASET_ROOT}/dataset/sequences" ]]; then
     echo "Invalid SemanticKITTI dataset path: ${DATASET_ROOT}" >&2

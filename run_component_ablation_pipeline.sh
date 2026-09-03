@@ -7,7 +7,7 @@ DATASET_ROOT="${DATASET_ROOT:-/inspire/hdd/project/agentend2end/ky26289/malaai/D
 GPU_LIST="${GPU_LIST:-0,1,2,3}"
 SEED="${SEED:-31}"
 RUN_ID="$(date -u +%Y%m%d_%H%M%S)_$$"
-OUT_ROOT="${OUT_ROOT:-${ROOT}/logs/research/semantic_kitti/ABC_pipeline_${RUN_ID}}"
+OUT_ROOT="${OUT_ROOT:-${ROOT}/logs/ablation/semantic_kitti/component_pipeline_${RUN_ID}}"
 BASE_B="${BASE_B:-${ROOT}/logs/retrain/semantic_kitti/B-sparse/run_20260828_204549_3971091/ckpt_best.pth}"
 FUSION_WEIGHTS="${FUSION_WEIGHTS:-1:0:0,0:1:0,0:0:1,1:1:1,0.15:0.35:0.50,0.18:0.34:0.48,0.20:0.30:0.50,0.20:0.32:0.48,0.20:0.34:0.46,0.21:0.30:0.49,0.21:0.32:0.47,0.21:0.34:0.45,0.22:0.29:0.49,0.22:0.31:0.47,0.22:0.33:0.45,0.22:0.35:0.43,0.23:0.28:0.49,0.23:0.30:0.47,0.23:0.32:0.45,0.23:0.34:0.43,0.24:0.27:0.49,0.24:0.29:0.47,0.24:0.31:0.45,0.25:0.27:0.48,0.25:0.29:0.46}"
 
@@ -57,15 +57,15 @@ C_DIR="${OUT_ROOT}/C_budgeted_router"
 mkdir -p "${Z_DIR}" "${C_DIR}"
 cp -- configs/semantic_kitti/Matter3DToken_B-z-aware-prototype-v3-transfer-20.yaml "${Z_DIR}/config.yaml"
 cp -- configs/semantic_kitti/Matter3DToken_B-budgeted-router-nearfull-semantic-20.yaml "${C_DIR}/config.yaml"
-python research/create_z_aware_init.py --config "${Z_DIR}/config.yaml" --source "${BASE_B}" --output "${Z_DIR}/ckpt_init.pth"
-python research/create_z_aware_init.py --config "${C_DIR}/config.yaml" --source "${BASE_B}" --output "${C_DIR}/ckpt_init.pth"
+python tools/create_z_aware_init.py --config "${Z_DIR}/config.yaml" --source "${BASE_B}" --output "${Z_DIR}/ckpt_init.pth"
+python tools/create_z_aware_init.py --config "${C_DIR}/config.yaml" --source "${BASE_B}" --output "${C_DIR}/ckpt_init.pth"
 
 run_train "A_z_aware_prototype" "${Z_DIR}/config.yaml" "${Z_DIR}/ckpt_init.pth"
 run_train "C_budgeted_router" "${C_DIR}/config.yaml" "${C_DIR}/ckpt_init.pth"
 
 FUSION_DIR="${OUT_ROOT}/fusion"
 mkdir -p "${FUSION_DIR}"
-CUDA_VISIBLE_DEVICES="${GPU_LIST%%,*}" python research/eval_heterogeneous_blend.py \
+CUDA_VISIBLE_DEVICES="${GPU_LIST%%,*}" python tools/eval_heterogeneous_blend.py \
     --dataset "${DATASET_ROOT}" \
     --config_a "${Z_DIR}/config.yaml" --checkpoint_a "${Z_DIR}/ckpt_best.pth" \
     --config_b configs/semantic_kitti/Matter3DToken_B-sparse-batch-reindex-20.yaml --checkpoint_b "${BASE_B}" \
@@ -73,7 +73,7 @@ CUDA_VISIBLE_DEVICES="${GPU_LIST%%,*}" python research/eval_heterogeneous_blend.
     --weight_sets "${FUSION_WEIGHTS}" \
     --output "${FUSION_DIR}/metrics.txt" 2>&1 | tee "${FUSION_DIR}/eval.log"
 
-python research/audit_abc_goal.py \
+python tools/audit_component_results.py \
     --checkpoint_a "${Z_DIR}/ckpt_best.pth" \
     --checkpoint_b "${BASE_B}" \
     --checkpoint_c "${C_DIR}/ckpt_best.pth" \
